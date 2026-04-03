@@ -573,6 +573,68 @@ arr.find(n => n === 1);
 👉 Returns `1` (not `[1]`)
 
 
+Yes 👍 you’re understanding it correctly.
+
+### 🔥 Difference when no match is found:
+
+### ✅ `filter()`
+
+```js
+let arr = [1,2,3];
+
+let res = arr.filter(n => n > 10);
+console.log(res);
+```
+
+👉 Output:
+
+```js
+[] (truthy)
+```
+
+✔ Always returns an **array** (even if empty)
+
+---
+
+### ✅ `find()`
+
+```js
+let arr = [1,2,3];
+
+let res = arr.find(n => n > 10);
+console.log(res);
+```
+
+👉 Output:
+
+```js
+undefined (falsy)
+```
+
+✔ Returns **undefined** if nothing is found
+
+---
+
+# 🔥 Summary
+
+| Method     | If match found | If no match |
+| ---------- | -------------- | ----------- |
+| `filter()` | `[values]`     | `[]`        |
+| `find()`   | `value`        | `undefined` |
+
+---
+
+
+
+# 💡 Interview one-liner
+
+👉
+
+* `filter()` → always returns an array
+* `find()` → returns element or `undefined`
+
+
+
 
 
 
