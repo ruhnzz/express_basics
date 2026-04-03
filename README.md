@@ -778,14 +778,6 @@ Without plugging → nothing works ❌
 👉 You **must use `app.use()`** if you're using separate router files
 👉 Otherwise routes won’t be registered
 
----
-
-If you want, I can show:
-
-* folder structure for scalable backend (used in companies)
-* middleware flow diagram (very important concept)
-
-That’s your next level 👍
 
 
 
