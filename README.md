@@ -633,6 +633,160 @@ undefined (falsy)
 * `filter()` → always returns an array
 * `find()` → returns element or `undefined`
 
+routes in different folder connected to server
+Good question — this is about **how Express routing works internally** 👍
+
+Short answer:
+👉 ❌ If you remove `app.use('/api/posts', posts)` → your routes will NOT work
+👉 ✅ You **must connect the router to the app**
+
+---
+
+# 🔥 Why `app.use()` is required
+
+You created a router:
+
+```js
+const router = express.Router();
+```
+
+👉 This router is like a **separate mini app**
+👉 But Express doesn’t know about it until you attach it
+
+---
+
+# ✅ This line connects everything:
+
+```js
+app.use('/api/posts', posts);
+```
+
+👉 Meaning:
+
+* All routes inside `posts` will be prefixed with `/api/posts`
+
+---
+
+# 🔹 How your routes actually work now
+
+Inside router:
+
+```js
+router.get('/')
+```
+
+👉 becomes:
+
+```
+/api/posts/
+```
+
+---
+
+```js
+router.get('/:id')
+```
+
+👉 becomes:
+
+```
+/api/posts/1
+```
+
+---
+
+# ❌ If you remove `app.use()`
+
+Then:
+
+* Router is never used
+* No routes are registered
+* API won’t respond
+
+👉 You’ll get:
+
+```
+Cannot GET /api/posts
+```
+
+---
+
+# ❓ Your question:
+
+> can I move `/api/posts` inside router?
+
+👉 ❌ Not like this:
+
+```js
+router.get('/api/posts') // ❌ won't work as expected
+```
+
+Because:
+
+* Router still isn’t attached to app
+
+---
+
+# ✅ Alternative (if you don’t want `app.use` prefix)
+
+You can directly define routes in main file:
+
+```js
+app.get('/api/posts', ...)
+app.get('/api/posts/:id', ...)
+```
+
+✔ This works
+❌ But not modular (bad for large apps)
+
+---
+
+# 🔥 Best practice (VERY IMPORTANT)
+
+Use router + app.use:
+
+```js
+app.use('/api/posts', posts);
+```
+
+👉 Benefits:
+
+* Clean structure
+* Scalable
+* Separation of concerns
+
+---
+
+# 💡 Simple analogy
+
+* `router` = a file full of routes 📄
+* `app.use()` = plugging that file into your server 🔌
+
+Without plugging → nothing works ❌
+
+---
+
+# 🔥 Interview one-liner
+
+👉
+`app.use()` is used to mount a router to the main app, so its routes become accessible.
+
+---
+
+# ⚡ Final answer
+
+👉 You **must use `app.use()`** if you're using separate router files
+👉 Otherwise routes won’t be registered
+
+---
+
+If you want, I can show:
+
+* folder structure for scalable backend (used in companies)
+* middleware flow diagram (very important concept)
+
+That’s your next level 👍
+
 
 
 
